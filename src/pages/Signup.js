@@ -9,7 +9,7 @@ const Signup = ({ setIsLoggedIn }) => {
       desc1="Build skills for today, tomorrow, and beyond"
       desc2="Education to future-proof your career"
       image={signup}
-      formType="login"
+      formtype="signup"
       setIsLoggedIn={setIsLoggedIn}
     />
   );

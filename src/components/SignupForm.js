@@ -1,7 +1,12 @@
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
-const SignupForm = () => {
+const SignupForm = (setIsLoggedIn) => {
+
+
+  const navigate = useNavigate();
   const [FormData, setFormData] = useState({
     firstname: "",
     lastname: "",
@@ -18,16 +23,36 @@ const SignupForm = () => {
       [event.target.name]: event.target.value,
     }));
   }
+
+  function submitHandler(event)
+  {
+    event.preventDefault()
+    if(FormData.password !== FormData.confirmPassword)
+    {
+      toast.error("Passwords do not match")
+      return;
+    }
+    setIsLoggedIn(true);
+    toast.success("Account Created")
+    const accountData = {
+      ...FormData
+    };
+    console.log("Prinitng the Account data")
+    console.log(accountData);
+
+    navigate("/dashboard")
+    
+  }
   return (
     <div>
       {/* student instructor tab */}
 
       <div>
-        <button>Student</button>
+        <button className="flex bg-richblack-800 p-1 gap-x-1 rounded-full max-w-max">Student</button>
 
         <button>Instructor</button>
 
-        <form>
+        <form onSubmit={submitHandler}>
           <div>
             {/* FIRSTNAME AND LASTNAME  */}
             <label>
@@ -106,7 +131,7 @@ const SignupForm = () => {
                 name="confirmPassword"
                 onChange={changeHandler}
                 placeholder="Confirm Password"
-                value={FormData.password}
+                value={FormData.confirmPassword}
               />
 
               <span onClick={() => setShowPassword((prev) => !prev)}>
@@ -115,7 +140,7 @@ const SignupForm = () => {
               </span>
             </label>
           </div>
-          <button>Create Account </button>
+          <button className="bg-yellow-50 py-[8px] px-[12px] rounded-[8px] mt-6 font-medium text-richblack-900 w-full">Create Account </button>
         </form>
       </div>
     </div>
